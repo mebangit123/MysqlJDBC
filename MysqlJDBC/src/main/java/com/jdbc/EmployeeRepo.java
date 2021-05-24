@@ -60,6 +60,10 @@ public class EmployeeRepo {
 		return this.employeePayrollList;
 	}
 	
+	public Map<String, Double> readAverageSalaryByGender() {
+		return employeeService.getAverageSalaryByGender();
+	}
+	
 	public void updateEmployeeSalary(String name, double salary) 
 	{
 		int result = employeeService.updateEmployeeData(name, salary);

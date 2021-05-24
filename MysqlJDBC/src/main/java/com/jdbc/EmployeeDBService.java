@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +45,25 @@ public class EmployeeDBService {
 		String sql = String.format("select * from employee_payroll where start between '%s' and '%s';",
 									Date.valueOf(startDate), Date.valueOf(endDate));
 		return this.getEmployeePayrollDataUsingDB(sql);
+	}
+	
+	public Map<String, Double> getAverageSalaryByGender() {
+		String sql = "select gender, avg(basic_pay) as avg_salary from employee_payroll group by gender;";
+		Map<String, Double> genderToAverageSalaryMap = new HashMap<>();
+		try(Connection conn = this.getConnection())
+		{
+			Statement statement = conn.createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+			while(resultSet.next())
+			{
+				String gender = resultSet.getString("gender");
+				double salary = resultSet.getDouble("avg_salary");
+				genderToAverageSalaryMap.put(gender, salary);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return genderToAverageSalaryMap;
 	}
 	
 	private List<EmployeePayroll> getEmployeePayrollDataUsingDB(String sql) {

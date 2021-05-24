@@ -2,6 +2,7 @@ package com.jdbc;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,5 +34,15 @@ public class EmployeePayrollTest {
 		LocalDate endDate = LocalDate.now();
 		List<EmployeePayroll> employeePayrollData = repo.retrieveAllEmployeeJoinedWithInGivenDateRange(startDate, endDate);
 		Assert.assertEquals(3, employeePayrollData.size());
+	}
+	
+	@Test
+	public void givenPayrollData_WhenAverageSalaryRetrieved_ShouldReturnProperValue()
+	{
+		EmployeeRepo repo = new EmployeeRepo();
+		repo.readEmployeePayrollData();
+		Map<String, Double> averageSalaryByGender = repo.readAverageSalaryByGender();
+		Assert.assertTrue(averageSalaryByGender.get("M").equals(1500000.00) &&
+						  averageSalaryByGender.get("F").equals(3500000.00));
 	}
 }
