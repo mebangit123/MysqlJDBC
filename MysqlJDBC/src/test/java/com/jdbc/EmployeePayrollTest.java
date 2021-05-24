@@ -1,5 +1,6 @@
 package com.jdbc;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.Assert;
@@ -21,5 +22,16 @@ public class EmployeePayrollTest {
 		repo.updateEmployeeSalary("Terisa", 3500000.00);
 		boolean result = repo.checkEmployeePayrollInSyncWithDB("Terisa");
 		Assert.assertTrue(result);
+	}
+	
+	@Test
+	public void givenDateRange_WhenRetrieved_ShouldMatchEmployeeCount() 
+	{
+		EmployeeRepo repo = new EmployeeRepo();
+		repo.readEmployeePayrollData();
+		LocalDate startDate = LocalDate.of(2018, 01, 01);
+		LocalDate endDate = LocalDate.now();
+		List<EmployeePayroll> employeePayrollData = repo.retrieveAllEmployeeJoinedWithInGivenDateRange(startDate, endDate);
+		Assert.assertEquals(3, employeePayrollData.size());
 	}
 }

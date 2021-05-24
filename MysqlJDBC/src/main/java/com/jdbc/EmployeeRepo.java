@@ -80,4 +80,11 @@ public class EmployeeRepo {
 		List<EmployeePayroll> emp = employeeService.getEmployeePayrollData(name);
 		return emp.get(0).equals(getEmployeePayrollData(name));
 	}
+
+	public List<EmployeePayroll> retrieveAllEmployeeJoinedWithInGivenDateRange(LocalDate startDate, LocalDate endDate)
+	{
+		return employeeService.getEmployeeWithInDateRange(startDate, endDate);
+
+	}
+	
 }

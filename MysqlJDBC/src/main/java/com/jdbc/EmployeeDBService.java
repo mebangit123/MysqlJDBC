@@ -42,6 +42,13 @@ public class EmployeeDBService {
 		return 0;
 	}
 	
+	public List<EmployeePayroll> getEmployeeWithInDateRange(LocalDate startDate, LocalDate endDate)
+	{
+		String sql = String.format("select * from employee_payroll where start between '%s' and '%s';",
+									Date.valueOf(startDate), Date.valueOf(endDate));
+		return this.getEmployeePayrollDataUsingDB(sql);
+	}
+	
 	private List<EmployeePayroll> getEmployeePayrollDataUsingDB(String sql) {
 		List<EmployeePayroll> empList = new ArrayList<>();
 		try(Connection conn = this.getConnection())
