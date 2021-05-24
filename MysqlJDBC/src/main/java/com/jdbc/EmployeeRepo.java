@@ -2,33 +2,47 @@ package com.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class EmployeeRepo {
-	public String jdbcURL = "jdbc:mysql://localhost:3306/payroll_service";
-	public String userName = "root";
-	public String password = "root";
-	public Connection conn;
+	
+	Scanner sc = new Scanner(System.in);
+	private Connection conn;
+	
+	private List<EmployeePayroll> employeePayrollList = new ArrayList<>();
+	private EmployeeDBService employeeService;
+	
+	public EmployeeRepo() {
+		employeeService = EmployeeDBService.getInstance();
+	}
+	
+	public EmployeeRepo(List<EmployeePayroll> empList) {
+		this();
+		this.employeePayrollList = empList;
+	}
+	
 	
 	public void checkDataBaseConnection() {
-		try {
+		try 
+		{
 			//Loading mysql driver.
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("Driver loaded");
 			
 			//Establish Connection
-			conn = DriverManager.getConnection(jdbcURL,userName,password);
+			conn = employeeService.getConnection();
 			System.out.println("Connection is successfull...");
 		
 		}catch(ClassNotFoundException e) {
 			throw new IllegalStateException("Cannot find the driver in the classpath!", e);
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}finally {
 			if(conn != null) {
 				try {
@@ -39,5 +53,10 @@ public class EmployeeRepo {
 			}
 		}
 		
+	}
+	
+	public List<EmployeePayroll> readEmployeePayrollData() {
+			this.employeePayrollList = employeeService.readData();
+		return this.employeePayrollList;
 	}
 }
