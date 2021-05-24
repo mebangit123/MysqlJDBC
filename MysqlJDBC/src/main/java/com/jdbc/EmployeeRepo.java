@@ -59,4 +59,25 @@ public class EmployeeRepo {
 			this.employeePayrollList = employeeService.readData();
 		return this.employeePayrollList;
 	}
+	
+	public void updateEmployeeSalary(String name, double salary) 
+	{
+		int result = employeeService.updateEmployeeData(name, salary);
+		if(result == 0) return;
+		EmployeePayroll emp = this.getEmployeePayrollData(name);
+		if(emp != null) emp.setSalary(salary);
+	}
+	
+	private EmployeePayroll getEmployeePayrollData(String name) 
+	{
+		return this.employeePayrollList.stream()
+					.filter(employeePayrollDataItem -> employeePayrollDataItem.getName().equals(name))
+					.findFirst()
+					.orElse(null);
+	}
+	public boolean checkEmployeePayrollInSyncWithDB(String name) 
+	{
+		List<EmployeePayroll> emp = employeeService.getEmployeePayrollData(name);
+		return emp.get(0).equals(getEmployeePayrollData(name));
+	}
 }

@@ -12,4 +12,14 @@ public class EmployeePayrollTest {
 		List<EmployeePayroll> empData = repo.readEmployeePayrollData();
 		Assert.assertEquals(6, empData.size());
 	}
+	
+	@Test
+	public void givenNewSalaryForEmployee_WhenUpdate_ShouldSyncWithDB() 
+	{
+		EmployeeRepo repo = new EmployeeRepo();
+		List<EmployeePayroll> empList = repo.readEmployeePayrollData();
+		repo.updateEmployeeSalary("Terisa", 3500000.00);
+		boolean result = repo.checkEmployeePayrollInSyncWithDB("Terisa");
+		Assert.assertTrue(result);
+	}
 }
