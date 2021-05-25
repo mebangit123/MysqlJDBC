@@ -19,7 +19,7 @@ public class EmployeePayrollTest {
 	public void givenNewSalaryForEmployee_WhenUpdate_ShouldSyncWithDB() 
 	{
 		EmployeeRepo repo = new EmployeeRepo();
-		List<EmployeePayroll> empList = repo.readEmployeePayrollData();
+		List<EmployeePayroll> employeeList = repo.readEmployeePayrollData();
 		repo.updateEmployeeSalary("Terisa", 3500000.00);
 		boolean result = repo.checkEmployeePayrollInSyncWithDB("Terisa");
 		Assert.assertTrue(result);
