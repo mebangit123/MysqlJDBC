@@ -55,6 +55,10 @@ public class EmployeeRepo {
 		
 	}
 	
+	public void addEmployeeToPayroll(String name, String gender, double salary, LocalDate startDate) {
+		employeePayrollList.add(employeeService.addEmployeeToPayroll(name, gender, salary, startDate));
+	}
+	
 	public List<EmployeePayroll> readEmployeePayrollData() {
 			this.employeePayrollList = employeeService.readData();
 		return this.employeePayrollList;
@@ -89,6 +93,6 @@ public class EmployeeRepo {
 	{
 		return employeeService.getEmployeeWithInDateRange(startDate, endDate);
 
-	}
+	} 
 	
 }

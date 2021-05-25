@@ -45,4 +45,14 @@ public class EmployeePayrollTest {
 		Assert.assertTrue(averageSalaryByGender.get("M").equals(1500000.00) &&
 						  averageSalaryByGender.get("F").equals(3500000.00));
 	}
+	
+	@Test
+	public void givenNewEmployee_WhenAdded_ShouldSyncWithDB()
+	{
+		EmployeeRepo repo = new EmployeeRepo();
+		repo.readEmployeePayrollData();
+		repo.addEmployeeToPayroll("Mark", "M", 5000000.00, LocalDate.now());
+		boolean result = repo.checkEmployeePayrollInSyncWithDB("Mark");
+		Assert.assertTrue(result);
+	}
 }
