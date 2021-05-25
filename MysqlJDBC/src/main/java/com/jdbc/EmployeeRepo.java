@@ -56,7 +56,7 @@ public class EmployeeRepo {
 	}
 	
 	public void addEmployeeToPayroll(String name, String gender, double salary, LocalDate startDate) {
-				employeePayrollList.add(employeeService.addEmployeeToPayroll(name, gender, salary, startDate));
+			employeePayrollList.add(employeeService.addEmployeeToPayroll(name, gender, salary, startDate));
 	}
 	
 	public List<EmployeePayroll> readEmployeePayrollData() {

@@ -49,6 +49,7 @@ public class EmployeePayrollTest {
 	@Test
 	public void givenNewEmployee_WhenAdded_ShouldSyncWithDB()
 	{
+			
 		EmployeeRepo repo = new EmployeeRepo();
 		repo.readEmployeePayrollData();
 		repo.addEmployeeToPayroll("Mark", "M", 5000000.00, LocalDate.now());
