@@ -9,17 +9,23 @@ public class EmployeePayroll {
 	private double salary;
 	private String gender;
 	private LocalDate startDate;
-	public EmployeePayroll(int id, String name, double salary, LocalDate startDate) {
-		this.name = name;
-		this.salary = salary;
-		this.id = id;
-		this.startDate = startDate;
-	}
+	
 	public EmployeePayroll(int id, String name, double salary) {
 		this.name = name;
 		this.salary = salary;
 		this.id = id;
 	}
+	
+	public EmployeePayroll(int id, String name, double salary, LocalDate startDate) {
+		this(id, name, salary);
+		this.setStartDate(startDate);
+	}
+	
+	public EmployeePayroll(int id, String name, String gender, double salary, LocalDate startDate) {
+		this(id, name, salary, startDate);
+		this.gender = gender;
+	}
+	
 	public EmployeePayroll() {}
 	public int getId() {
 		return id;
@@ -39,6 +45,21 @@ public class EmployeePayroll {
 	public void setSalary(double salary) {
 		this.salary = salary;
 	}
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
 	@Override
 	public String toString() {
 		return "EmployeePayroll [id=" + id + ", name=" + name + ", salary=" + salary + "]";
@@ -56,5 +77,4 @@ public class EmployeePayroll {
 		return id == other.id && Objects.equals(name, other.name)
 				&& Double.doubleToLongBits(salary) == Double.doubleToLongBits(other.salary);
 	}
-	
 }

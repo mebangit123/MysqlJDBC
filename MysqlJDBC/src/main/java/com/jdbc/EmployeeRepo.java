@@ -1,13 +1,10 @@
 package com.jdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -15,9 +12,11 @@ import java.util.Scanner;
 public class EmployeeRepo {
 	
 	Scanner sc = new Scanner(System.in);
+	
 	private Connection conn;
 	
 	private List<EmployeePayroll> employeePayrollList = new ArrayList<>();
+	
 	private EmployeeDBService employeeService;
 	
 	public EmployeeRepo() {
@@ -28,7 +27,6 @@ public class EmployeeRepo {
 		this();
 		this.employeePayrollList = empList;
 	}
-	
 	
 	public void checkDataBaseConnection() {
 		try 
@@ -56,7 +54,15 @@ public class EmployeeRepo {
 	}
 	
 	public void addEmployeeToPayroll(String name, String gender, double salary, LocalDate startDate) {
-			employeePayrollList.add(employeeService.addEmployeeToPayroll(name, gender, salary, startDate));
+//			employeePayrollList.add(employeeService.addEmployeeToPayroll(name, gender, salary, startDate));
+			employeeService.addEmployeeToPayroll(name, gender, salary, startDate);
+	}
+	
+	public void addEmployeeToPayroll(List<EmployeePayroll> employeeList) {
+		employeeList.forEach(employeeData ->
+		{
+			this.addEmployeeToPayroll(employeeData.getName(), employeeData.getGender(), employeeData.getSalary(), employeeData.getStartDate());
+		});
 	}
 	
 	public List<EmployeePayroll> readEmployeePayrollData() {
@@ -75,6 +81,12 @@ public class EmployeeRepo {
 		EmployeePayroll emp = this.getEmployeePayrollData(name);
 		if(emp != null) emp.setSalary(salary);
 	}
+
+	public List<EmployeePayroll> retrieveAllEmployeeJoinedWithInGivenDateRange(LocalDate startDate, LocalDate endDate)
+	{
+		return employeeService.getEmployeeWithInDateRange(startDate, endDate);
+
+	}
 	
 	private EmployeePayroll getEmployeePayrollData(String name) 
 	{
@@ -83,16 +95,14 @@ public class EmployeeRepo {
 					.findFirst()
 					.orElse(null);
 	}
+	
 	public boolean checkEmployeePayrollInSyncWithDB(String name) 
 	{
 		List<EmployeePayroll> emp = employeeService.getEmployeePayrollData(name);
 		return emp.get(0).equals(getEmployeePayrollData(name));
 	}
 
-	public List<EmployeePayroll> retrieveAllEmployeeJoinedWithInGivenDateRange(LocalDate startDate, LocalDate endDate)
-	{
-		return employeeService.getEmployeeWithInDateRange(startDate, endDate);
-
+	public long countEntries() {
+		return employeePayrollList.size();
 	} 
-	
 }

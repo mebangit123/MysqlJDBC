@@ -14,9 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 public class EmployeeDBService {
+	private int connectionCounter = 0;
 	private PreparedStatement employeePayrollDataStatement;
 	private static EmployeeDBService employeeService;
 
+	public EmployeeDBService() {}
+	
 	public EmployeePayroll addEmployeeToPayrollUC7(String name, String gender, double salary, LocalDate startDate) {
 		int employeeId = -1;
 		EmployeePayroll employeeList = null;
@@ -219,16 +222,20 @@ public class EmployeeDBService {
 	
 	public Connection getConnection() 
 	{
+		connectionCounter++;
 		String jdbcURL = "jdbc:mysql://localhost:3306/payroll_service";
 		String userName = "root";
 		String password = "root";
 		Connection conn = null; 
-		
+		System.out.println("Processing Thread: "+Thread.currentThread().getName()+
+							"Connecting to database with Id:"+connectionCounter);
 		try {
-			conn = DriverManager.getConnection(jdbcURL,userName,password);
+	 		conn = DriverManager.getConnection(jdbcURL,userName,password);
 	 	} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Processing Thread:"+Thread.currentThread().getName()+
+						   "Id: "+connectionCounter + "Connection is Successful");
 		return conn;
 	}
 }
