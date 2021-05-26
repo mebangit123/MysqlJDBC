@@ -62,4 +62,28 @@ public class EmployeePayrollRestAssuredTest {
 		long entries = employeeRepo.countEntries();
 		Assert.assertEquals(3, entries);
 	}
+	@Test
+	public void givenListOfNewEmployee_WhenAdded_ShouldMatch201ResponseAndCount()
+	{
+		EmployeePayroll[] arrayOfEmps = getEmployeeList();
+		EmployeeRepo employeeRepo;
+		employeeRepo = new EmployeeRepo(Arrays.asList(arrayOfEmps));
+		
+		EmployeePayroll[] arrayOfEmpPayrolls = {
+			new EmployeePayroll(0, "Sunder", 600000.00),
+			new EmployeePayroll(0, "Anil", 1000000.00),
+			new EmployeePayroll(0, "Mukesh", 200000.00)
+		};
+		for(EmployeePayroll employeePayroll : arrayOfEmpPayrolls)
+		{
+			Response response = addEmployeeToJSONServer(employeePayroll);
+			int statusCode = response.getStatusCode();
+			Assert.assertEquals(201, statusCode);
+			
+			employeePayroll = new Gson().fromJson(response.asString(), EmployeePayroll.class);
+			employeeRepo.addEmployeeToPayroll(employeePayroll);
+		}
+		long entries = employeeRepo.countEntries();
+		Assert.assertEquals(6, entries);
+	}
 }

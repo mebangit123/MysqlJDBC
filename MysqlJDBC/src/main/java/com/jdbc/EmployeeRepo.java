@@ -111,7 +111,8 @@ public class EmployeeRepo {
 		int result = employeeService.updateEmployeeData(name, salary);
 		if(result == 0) return;
 		EmployeePayroll emp = this.getEmployeePayrollData(name);
-		if(emp != null) emp.setSalary(salary);
+		if(emp != null) 
+			emp.setSalary(salary);
 	}
 
 	public List<EmployeePayroll> retrieveAllEmployeeJoinedWithInGivenDateRange(LocalDate startDate, LocalDate endDate)
