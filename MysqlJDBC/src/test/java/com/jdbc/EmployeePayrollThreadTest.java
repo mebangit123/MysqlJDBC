@@ -41,6 +41,7 @@ public class EmployeePayrollThreadTest {
 				new EmployeePayroll(0, "Mukesh", "M", 100000.0, LocalDate.now()),
 				new EmployeePayroll(0, "Anil", "M", 200000.0, LocalDate.now())
 		};
+		
 		EmployeeRepo employeeRepo = new EmployeeRepo();
 		employeeRepo.readEmployeePayrollData();
 		Instant start = Instant.now();

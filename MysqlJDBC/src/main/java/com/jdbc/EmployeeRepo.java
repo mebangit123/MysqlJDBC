@@ -65,6 +65,34 @@ public class EmployeeRepo {
 		});
 	}
 	
+	public void addEmployeeToPayrollWithThreads(List<EmployeePayroll> employeeList)
+	{
+		Map<Integer, Boolean> employeeAdditionStatus = new HashMap<Integer, Boolean>();
+		employeeList.forEach(employeeData ->
+		{
+			Runnable task = () ->
+			{
+				employeeAdditionStatus.put(employeeData.hashCode(), false);
+				System.out.println("Employee being Added: "+Thread.currentThread().getName());
+				this.addEmployeeToPayroll(employeeData.getName(), employeeData.getGender(), employeeData.getSalary(), employeeData.getStartDate());
+				employeeAdditionStatus.put(employeeData.hashCode(), true);
+				System.out.println("Employee Added: "+Thread.currentThread().getName());
+			};
+			Thread thread = new Thread(task, employeeData.getName());
+			thread.start();
+		});
+		while(employeeAdditionStatus.containsValue(false))
+		{
+			try 
+			{ 
+				Thread.sleep(10);
+			}catch(InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public List<EmployeePayroll> readEmployeePayrollData() {
 			this.employeePayrollList = employeeService.readData();
 		return this.employeePayrollList;

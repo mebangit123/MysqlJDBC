@@ -228,7 +228,7 @@ public class EmployeeDBService {
 		String password = "root";
 		Connection conn = null; 
 		System.out.println("Processing Thread: "+Thread.currentThread().getName()+
-							"Connecting to database with Id:"+connectionCounter);
+							 "Connecting to database with Id:"+connectionCounter);
 		try {
 	 		conn = DriverManager.getConnection(jdbcURL,userName,password);
 	 	} catch (SQLException e) {
