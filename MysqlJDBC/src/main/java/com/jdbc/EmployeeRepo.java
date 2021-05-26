@@ -25,7 +25,7 @@ public class EmployeeRepo {
 	
 	public EmployeeRepo(List<EmployeePayroll> empList) {
 		this();
-		this.employeePayrollList = empList;
+		this.employeePayrollList = new ArrayList<>(empList);
 	}
 	
 	public void checkDataBaseConnection() {
@@ -63,6 +63,10 @@ public class EmployeeRepo {
 		{
 			this.addEmployeeToPayroll(employeeData.getName(), employeeData.getGender(), employeeData.getSalary(), employeeData.getStartDate());
 		});
+	}
+	
+	public void addEmployeeToPayroll(EmployeePayroll employeePayroll) {
+		employeePayrollList.add(employeePayroll);
 	}
 	
 	public void addEmployeeToPayrollWithThreads(List<EmployeePayroll> employeeList)
