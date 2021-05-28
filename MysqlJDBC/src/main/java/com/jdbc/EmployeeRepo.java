@@ -116,6 +116,11 @@ public class EmployeeRepo {
 			emp.setSalary(salary);
 	}
 
+	public void deleteEmployeePayroll(String name) {
+		EmployeePayroll employeePayroll = this.getEmployeePayrollData(name);
+		employeePayrollList.remove(employeePayroll);
+	} 
+	
 	public List<EmployeePayroll> retrieveAllEmployeeJoinedWithInGivenDateRange(LocalDate startDate, LocalDate endDate)
 	{
 		return employeeService.getEmployeeWithInDateRange(startDate, endDate);
@@ -138,5 +143,5 @@ public class EmployeeRepo {
 
 	public long countEntries() {
 		return employeePayrollList.size();
-	} 
+	}
 }
