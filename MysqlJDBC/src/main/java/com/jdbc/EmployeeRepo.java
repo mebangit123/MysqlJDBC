@@ -108,9 +108,10 @@ public class EmployeeRepo {
 	
 	public void updateEmployeeSalary(String name, double salary) 
 	{
-		int result = employeeService.updateEmployeeData(name, salary);
-		if(result == 0) return;
+//		int result = employeeService.updateEmployeeData(name, salary);
+//		if(result == 0) return;
 		EmployeePayroll emp = this.getEmployeePayrollData(name);
+		//EmployeePayroll emp = new EmployeePayroll();
 		if(emp != null) 
 			emp.setSalary(salary);
 	}
@@ -121,7 +122,7 @@ public class EmployeeRepo {
 
 	}
 	
-	private EmployeePayroll getEmployeePayrollData(String name) 
+	public EmployeePayroll getEmployeePayrollData(String name) 
 	{
 		return this.employeePayrollList.stream()
 					.filter(employeePayrollDataItem -> employeePayrollDataItem.getName().equals(name))
